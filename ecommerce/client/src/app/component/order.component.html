@@ -1,0 +1,70 @@
+<form [formGroup]="form" (ngSubmit)="placeOrder()">
+    
+<table>
+    <tr>
+        <td>Name:</td>
+        <td>
+          <input type="text" size="30" formControlName="name">
+          <div *ngIf="invalidControl('name')">
+              Please enter your name.
+          </div>
+        </td>
+    </tr>
+    <tr>
+        <td>Email:</td>
+        <td>
+            <input type="email" size="30" formControlName="email">
+            <div *ngIf="invalidControl('email')">
+                Please enter a valid email.
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <button type="button" [disabled]="invalidControl('name') || invalidControl('email') || form.pristine"
+            (click)="addItem()">Add Item</button>
+        </td>
+        <td>
+            <button type="button"
+            (click)="clearData()">Reset</button>
+        </td>
+    </tr>
+    <tr>
+        <td>
+          <button type="submit" [disabled]="invalidForm()">
+            Place Order
+          </button>
+      </td>
+    </tr>
+</table>
+  
+<div *ngIf="itemsArray.controls.length > 0; else cartEmpty">
+    <h2>Line Items</h2>
+    <table>
+        <tr>
+            <th>Item</th>
+            <th>Quantity</th>
+        </tr>
+        <tbody formArrayName="lineItems">
+        <tr *ngFor="let i of itemsArray.controls; let idx =index" [formGroupName]="idx">
+            <td>
+              <input type="text" size="40" formControlName="item">
+            </td>
+            <td>
+              <input type="number" min="1" formControlName="quantity">
+            </td>
+            <td>
+                <button (click)="deleteItem(idx)">X</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<ng-template #cartEmpty>
+	<h2>Your cart is empty</h2>
+</ng-template>
+  
+<div>
+    {{ obs | async | json }}
+</div>

@@ -29,15 +29,22 @@ public class OrderController {
 
         JsonObject jsonObj = Order.fromString(payload);
         Order order = Order.createOrder(jsonObj);
-        
-        String orderId = orderSvc.saveOrder(order);
+
+        try{String orderId = orderSvc.saveOrder(order);
 
         JsonObject resp = Json.createObjectBuilder()
             .add("orderId", orderId)
             .build();
-
+        
         return ResponseEntity.ok(resp.toString());
+        }
+        catch (Exception e){
+        
+            return ResponseEntity.ok(e.toString());
 
-    }
+        }
+
+        }
+
 
 }

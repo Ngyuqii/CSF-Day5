@@ -4,7 +4,7 @@
     2. Email
     3. Shopping list of items and quantity
 - Post the Json string to server (http://localhost:8080/order) upon order placed
-- A response of "Order id <orderId> is placed." to be received upon successful HTTP POST.
+- A response of "Order id {orderId} is placed." to be received upon successful HTTP POST.
 
 ### Server
 - Receive Json string from client and save the document into Mongo.
